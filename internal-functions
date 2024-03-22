@@ -41,6 +41,7 @@ fn-letsencrypt-acme-execute-challenge() {
   mkdir -p "$DOKKU_LIB_ROOT/data/letsencrypt/$APP"
   docker run --rm \
     --env-file "$host_config_dir/docker.env" \
+    --network=host \
     --user $DOKKU_UID:$DOKKU_GID \
     -v "$host_config_dir:/certs" \
     -v "$DOKKU_LIB_ROOT/data/letsencrypt/$APP:/webroot" \
@@ -98,6 +99,7 @@ fn-letsencrypt-acme-revoke() {
   docker run --rm \
     --env-file "$host_config_dir/docker.env" \
     --user $DOKKU_UID:$DOKKU_GID \
+    --network=host \
     -p "$acme_port:$acme_port" \
     -v "$host_config_dir:/certs" \
     -v "$DOKKU_LIB_ROOT/data/letsencrypt/$APP:/webroot" \
